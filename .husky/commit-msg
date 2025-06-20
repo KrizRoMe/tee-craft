@@ -1,0 +1,2 @@
+echo "💬 Running commit-msg hook..."
+bunx --no -- commitlint --edit $1

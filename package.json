@@ -6,7 +6,13 @@
 		"dev": "next dev --turbopack",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "biome lint",
+		"format": "biome format",
+		"check": "biome check",
+		"precommit": "lint-staged",
+		"prepare": "husky",
+		"test": "jest",
+		"test:watch": "jest --watch"
 	},
 	"dependencies": {
 		"react": "19.0.0",
