@@ -1,7 +1,33 @@
+"use client";
+
+import { Html, OrbitControls } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { Suspense } from "react";
+import { TShirtModel } from "./tshirt-model";
+import { TShirtSkeleton } from "./tshirt-skeleton";
+
 export function TShirtCanvas() {
 	return (
 		<div className="absolute inset-0 bg-primary z-0 flex items-center justify-center">
-			<span className="text-white font-bold text-xl">Canvas 3D</span>
+			<Canvas camera={{ position: [0, 0, 3], fov: 50 }}>
+				<ambientLight intensity={0.5} />
+				<directionalLight position={[5, 5, 5]} intensity={1} />
+				<Suspense
+					fallback={
+						<Html center>
+							<TShirtSkeleton />
+						</Html>
+					}
+				>
+					<TShirtModel />
+				</Suspense>
+				<OrbitControls
+					enablePan={false}
+					enableZoom={true}
+					minDistance={1}
+					maxDistance={4}
+				/>
+			</Canvas>
 		</div>
 	);
 }
