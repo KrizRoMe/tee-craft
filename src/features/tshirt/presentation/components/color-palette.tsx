@@ -9,19 +9,14 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { Palette, Copy, Check } from "lucide-react";
-import { useColorPaletteStore } from "../store/use-color-palette-store";
+import { DEFAULT_COLOR } from "../lib/constants";
+import { useColorStore } from "../store/use-color-store";
 
 const compactColors = ["#000000", "#ffffff", "#3b82f6", "#ef4444", "#22c55e"];
 
-interface ColorPalettePopoverProps {
-	defaultColor?: string;
-}
-
-export default function ColorPalettePopover({
-	defaultColor = "#ffffff",
-}: ColorPalettePopoverProps) {
-	const { colorPalette, setColorPalette } = useColorPaletteStore();
-	const [hexInput, setHexInput] = useState(defaultColor);
+export default function selectedColorPopover() {
+	const { selectedColor, setSelectedColor } = useColorStore();
+	const [hexInput, setHexInput] = useState(DEFAULT_COLOR);
 	const [copied, setCopied] = useState(false);
 	const [open, setOpen] = useState(false);
 
@@ -32,18 +27,18 @@ export default function ColorPalettePopover({
 	const handleHexChange = (value: string) => {
 		setHexInput(value);
 		if (isValidHex(value)) {
-			setColorPalette(value);
+			setSelectedColor(value);
 		}
 	};
 
 	const handleColorSelect = (color: string) => {
-		setColorPalette(color);
+		setSelectedColor(color);
 		setHexInput(color);
 	};
 
 	const copyToClipboard = async () => {
 		try {
-			await navigator.clipboard.writeText(colorPalette);
+			await navigator.clipboard.writeText(selectedColor);
 			setCopied(true);
 			setTimeout(() => setCopied(false), 1500);
 		} catch (err) {
@@ -64,11 +59,11 @@ export default function ColorPalettePopover({
 					<div className="flex items-center gap-2">
 						<div
 							className="w-8 h-8 rounded-sm border border-gray-200"
-							style={{ backgroundColor: colorPalette }}
+							style={{ backgroundColor: selectedColor }}
 						/>
 						<div className="flex-1 flex items-center gap-1">
 							<span className="font-mono text-xs text-gray-600">
-								{colorPalette}
+								{selectedColor}
 							</span>
 							<Button
 								variant="ghost"
@@ -103,13 +98,13 @@ export default function ColorPalettePopover({
 						<div className="relative">
 							<input
 								type="color"
-								value={colorPalette}
+								value={selectedColor}
 								onChange={(e) => handleColorSelect(e.target.value)}
 								className="absolute inset-0 w-8 h-8 opacity-0 cursor-pointer"
 							/>
 							<div
 								className="w-8 h-8 rounded-full border border-gray-200"
-								style={{ backgroundColor: colorPalette }}
+								style={{ backgroundColor: selectedColor }}
 							/>
 						</div>
 					</div>
@@ -122,7 +117,7 @@ export default function ColorPalettePopover({
 								key={color}
 								onClick={() => handleColorSelect(color)}
 								className={`w-7 h-7 rounded-sm border transition-all hover:scale-105 ${
-									colorPalette === color
+									selectedColor === color
 										? "border-gray-900 ring-1 ring-gray-900"
 										: "border-gray-200 hover:border-gray-300"
 								}`}
