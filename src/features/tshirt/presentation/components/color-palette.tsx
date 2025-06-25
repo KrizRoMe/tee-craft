@@ -14,7 +14,7 @@ import { useColorStore } from "../store/use-color-store";
 
 const compactColors = ["#000000", "#ffffff", "#3b82f6", "#ef4444", "#22c55e"];
 
-export default function selectedColorPopover() {
+export function ColorPalette() {
 	const { selectedColor, setSelectedColor } = useColorStore();
 	const [hexInput, setHexInput] = useState(DEFAULT_COLOR);
 	const [copied, setCopied] = useState(false);
