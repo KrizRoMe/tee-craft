@@ -1,6 +1,6 @@
 import { Decal, useTexture } from "@react-three/drei";
 import { useMemo } from "react";
-import { MeshBasicMaterial } from "three";
+import { createLogoMaterial } from "../lib/utils";
 import { useLogoStore } from "../store/use-logo-store";
 
 export function TshirtLogoTexture() {
@@ -11,21 +11,10 @@ export function TshirtLogoTexture() {
 	const MOVEMENT_X_MULTIPLIER = 0.4;
 	const MOVEMENT_Y_MULTIPLIER = 0.8;
 
-	const logoMaterial = useMemo(() => {
-		if (!logoTexture) return null;
-
-		const mat = new MeshBasicMaterial({
-			map: logoTexture,
-			transparent: true,
-			toneMapped: false,
-			depthWrite: false,
-			depthTest: true,
-			polygonOffset: true,
-			polygonOffsetFactor: -2,
-			alphaTest: 0.1,
-		});
-		return mat;
-	}, [logoTexture]);
+	const logoMaterial = useMemo(
+		() => (logoTexture ? createLogoMaterial(logoTexture) : null),
+		[logoTexture],
+	);
 
 	const scale: [number, number, number] = useMemo(() => {
 		if (!logoTexture?.image) return [0.1, 0.1, 0.1];
