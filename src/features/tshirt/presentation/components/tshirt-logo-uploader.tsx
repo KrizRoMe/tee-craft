@@ -1,6 +1,6 @@
 "use client";
 
-import { FileImage } from "lucide-react";
+import { Upload } from "lucide-react";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useLogoStore } from "../store/use-logo-store";
@@ -34,8 +34,13 @@ export function TshirtLogoUploader() {
 				style={{ display: "none" }}
 				onChange={handleFileChange}
 			/>
-			<Button variant="ghost" size="icon" onClick={handleUploadImage}>
-				<FileImage />
+			<Button
+				variant="ghost"
+				size="icon"
+				className="h-6 w-6"
+				onClick={handleUploadImage}
+			>
+				<Upload className="h-3 w-3" />
 			</Button>
 		</>
 	);
