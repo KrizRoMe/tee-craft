@@ -5,7 +5,9 @@ import { Popover, PopoverTrigger } from "@/components/ui/popover";
 import { Camera } from "lucide-react";
 import html2canvas from "html2canvas-pro";
 import { useCanvasExportStore } from "../store/use-canvas-export";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { canExportToday, cleanOldExports, registerExport } from "../lib/utils";
+import { toast } from "sonner";
 
 export function ExportCanvas() {
 	const containerRef = useCanvasExportStore((state) => state.containerRef);
@@ -13,7 +15,12 @@ export function ExportCanvas() {
 
 	const handleExport = async () => {
 		if (!containerRef?.current) {
-			console.warn("No hay referencia al canvas para exportar");
+			toast("El canvas no está disponible.");
+			return;
+		}
+
+		if (!canExportToday()) {
+			toast.warning("Límite de exportaciones alcanzado por hoy.");
 			return;
 		}
 
@@ -28,8 +35,13 @@ export function ExportCanvas() {
 		link.download = "tshirt-export.png";
 		link.click();
 
+		registerExport();
 		setOpen(false);
 	};
+
+	useEffect(() => {
+		cleanOldExports();
+	}, []);
 
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
