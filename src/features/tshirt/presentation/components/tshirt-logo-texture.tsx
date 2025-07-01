@@ -39,7 +39,7 @@ export function TshirtLogoTexture() {
 	const position: [number, number, number] = useMemo(() => {
 		const x = (logoTransform.position.x - 0.5) * MOVEMENT_X_MULTIPLIER;
 		const y = (0.5 - logoTransform.position.y) * MOVEMENT_Y_MULTIPLIER;
-		return [x, y, 0.1];
+		return [x, y, 0.5];
 	}, [logoTransform.position]);
 
 	const rotation: [number, number, number] = [0, 0, -logoTransform.rotation];
