@@ -16,10 +16,11 @@ export function BottomBar() {
 				rel="noopener noreferrer"
 			>
 				<Image
-					src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=krizrome&button_colour=FFDD00&font_colour=000000&font_family=Lato&outline_colour=000000&coffee_colour=ffffff"
+					src="https://cdn.buymeacoffee.com/buttons/v2/arial-yellow.png"
 					alt="Buy Me A Coffee"
-					width={150}
-					height={50}
+					width={120}
+					height={40}
+					className="rounded-md"
 				/>
 			</Link>
 		</div>
